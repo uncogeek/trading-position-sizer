@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Advanced Position Sizer</title>
+ <!-- Bootstrap CSS -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ <div class="container d-flex justify-content-center align-items-center min-vh-100 py-4">
+ <div class="app-container">
+ <h4 class="text-center mb-3">Position Sizer (EUR/USD)</h4>
+ 
+ <!-- Instrument Selection -->
+ <div class="mb-2 d-flex align-items-center">
+ <label for="instrument" class="form-label me-2">Instrument</label>
+ <select class="form-select me-2" id="instrument">
+ <optgroup label="Forex">
+ <option value="EURUSD" selected>EUR/USD</option>
+ <option value="GBPUSD">GBP/USD</option>
+ <option value="USDJPY">USD/JPY</option>
+ <option value="AUDUSD">AUD/USD</option>
+ <option value="USDCAD">USD/CAD</option>
+ <option value="USDCHF">USD/CHF</option>
+ <option value="NZDUSD">NZD/USD</option>
+ <option value="EURJPY">EUR/JPY</option>
+ <option value="EURGBP">EUR/GBP</option>
+ <option value="EURAUD">EUR/AUD</option>
+ <option value="EURCAD">EUR/CAD</option>
+ <option value="GBPAUD">GBP/AUD</option>
+ <option value="AUDJPY">AUD/JPY</option>
+ </optgroup>
+ <optgroup label="Commodities">
+ <option value="XAUUSD">GOLD (XAU/USD)</option>
+ <option value="XAGUSD">SILVER (XAG/USD)</option>
+ <option value="USOIL">US OIL</option>
+ </optgroup>
+ <optgroup label="Indices">
+ <option value="NASDAQ">NASDAQ</option>
+ <option value="DOWJONES">DOW JONES</option>
+ <option value="SP500">SP 500</option>
+ </optgroup>
+ <optgroup label="Crypto">
+ <option value="BTCUSDT">BTC/USDT</option>
+ <option value="ETHUSDT">ETH/USDT</option>
+ </optgroup>
+ </select>
+   <!-- New Toggle Price Button -->
+  <button type="button" id="togglePriceBtn" class="btn btn-secondary btn-sm me-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/><path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708"/></svg>
+  </button>
+ <!-- Get Prices Button -->
+ <button type="button" id="getPricesBtn" class="btn btn-secondary btn-sm">
+ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+ <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+ <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+ </svg>
+ </button>
+ </div>
+ 
+ <!-- Account Balance and Trade Direction -->
+ <div class="mb-2 d-flex flex-wrap align-items-center">
+ <div class="me-3 flex-grow-1 mb-2 mb-md-0">
+ <label for="accountBalance" class="form-label">Account Balance</label>
+ <div class="input-group">
+ <span class="input-group-text">$</span>
+ <input type="number" class="form-control" id="accountBalance" value="10000">
+ </div>
+ </div>
+ <div class="d-flex flex-column">
+ <label class="form-label mb-1">Trade Direction</label>
+ <div class="btn-group" role="group" id="tradeDirection">
+ <button type="button" class="btn btn-outline-secondary btn-sm active" data-direction="long">Long</button>
+ <button type="button" class="btn btn-outline-secondary btn-sm" data-direction="short">Short</button>
+ </div>
+ </div>
+ </div>
+
+ <!-- Price Inputs -->
+ <div class="mb-2">
+ <label for="entryPrice" class="form-label">Entry Price</label>
+ <div class="input-group">
+ <input type="number" step="0.0001" class="form-control" id="entryPrice" placeholder="1.0850">
+ <span class="input-group-text" id="entryUnit">USD</span>
+ </div>
+ </div>
+ 
+ <div class="mb-2">
+ <label for="stopLoss" class="form-label">Stop-Loss Price</label>
+ <div class="input-group">
+ <input type="number" step="0.0001" class="form-control" id="stopLoss" placeholder="Stop loss price">
+ <span class="input-group-text" id="slUnit">USD</span>
+ </div>
+ </div>
+ 
+ <div class="mb-2">
+ <label for="takeProfit" class="form-label">Take-Profit Price</label>
+ <div class="input-group">
+ <input type="number" step="0.0001" class="form-control" id="takeProfit" placeholder="Take profit price">
+ <span class="input-group-text" id="tpUnit">USD</span>
+ </div>
+ </div>
+ 
+ <!-- Risk & Leverage in One Line -->
+ <div class="row mb-2">
+ <div class="col-6">
+ <label for="riskPercent" class="form-label">Risk Percentage</label>
+ <div class="input-group">
+ <input type="number" step="0.1" class="form-control" id="riskPercent" value="1">
+ <span class="input-group-text">%</span>
+ </div>
+ </div>
+ <div class="col-6">
+ <label for="leverage" class="form-label">Leverage</label>
+ <div class="input-group">
+ <input type="number" class="form-control" id="leverage" value="50">
+ <span class="input-group-text">x</span>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- Calculated Outputs -->
+ <hr>
+ <div class="d-flex flex-wrap">
+ <div class="me-3 mb-2 mb-md-0">
+ <div class="mb-2" style="color: #dc3545;"><span>Risk (USD): </span><span class="output" id="riskUSD">$0.00</span></div>
+ <div class="mb-2" style="color: #198754"><span>Reward (USD): </span><span class="output" id="rewardUSD">$0.00</span></div>
+ <div class="mb-2" style="color: #dc3545;"><span>Risk (pips): </span><span class="output" id="riskPips">0</span></div>
+ <div class="mb-2" style="color: #198754"><span>Reward (pips): </span><span class="output" id="rewardPips">0</span></div>
+ <div class="mb-2"><span>Lot Size: </span><span class="output" id="lotSize">0.00</span></div>
+ </div>
+
+ <div>
+ <div class="mb-2"><span>R/R Ratio: </span><span class="output" id="rrRatio">0.00</span></div>
+ <div class="mb-2"><span>Position Size: </span><span class="output" id="positionSize">0 units</span></div>
+ <div class="mb-2"><span>Position Margin: </span><span class="output" id="positionMargin">$0.00</span></div>
+ <div class="mb-2"><span>Free Margin: </span><span class="output" id="freeMargin">$10000.00</span></div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Bootstrap JS & jQuery -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="functions.js"></script>
+ <script src="app.js"></script>
+</body>
+</html>
